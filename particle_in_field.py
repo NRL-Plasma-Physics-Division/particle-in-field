@@ -34,7 +34,7 @@ class ChargedParticle(PhysicsModule):
         self.eoverm = 1.7588e11
         self.charge = 1.6022e-19
         self.mass = 9.1094e-31
-        self.push = owner.find_tool_by_name("ForwardEuler").push
+        self.push = owner.find_tool_by_name(input_data["pusher"]).push
         
     def exchange_resources(self):
         self.publish_resource({"ChargedParticle:position": self.position})
@@ -54,6 +54,7 @@ class ParticleDiagnostic(Diagnostic):
         super().__init__(owner, input_data)
         self.data = None
         self.component = input_data["component"]
+        self.output_function = None
         
     def inspect_resource(self, resource):
         if "ChargedParticle:" + self.component in resource:
