@@ -1,4 +1,6 @@
-from turbopy import Simulation, PhysicsModule, Diagnostic, CSVDiagnosticOutput, ComputeTool
+from turbopy import Simulation, PhysicsModule, Diagnostic
+from turbopy import CSVDiagnosticOutput, ComputeTool
+from turbopy import construct_simulation_from_toml
 import numpy as np
 
 
@@ -105,5 +107,5 @@ Diagnostic.register("ParticleDiagnostic", ParticleDiagnostic)
 ComputeTool.register("ForwardEuler", ForwardEuler)
 
 input_file = "particle_in_field.toml"
-sim = Simulation(input_file)
+sim = construct_simulation_from_toml(input_file)
 sim.run()
