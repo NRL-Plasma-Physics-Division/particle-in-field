@@ -37,7 +37,8 @@ filename = "grid.csv"
 [Diagnostics.clock]
 filename = "time.csv"
 
-[[Diagnostics.field]] # Double brackets here because we can have multiples of these...
+# [[Diagnostics.field]] # Double brackets here because we can have multiples of these...
+[[Diagnostics.FieldPlottingDiagnostic]]
 component = 0
 field = "EMField:E"
 filename = "efield.csv"
