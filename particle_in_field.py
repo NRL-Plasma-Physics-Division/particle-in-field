@@ -1,7 +1,10 @@
-from turbopy import Simulation, PhysicsModule, Diagnostic
-from turbopy import CSVDiagnosticOutput, ComputeTool
-from turbopy import construct_simulation_from_toml
 import numpy as np
+import xarray as xr
+import matplotlib.pyplot as plt
+
+from turbopy import Simulation, PhysicsModule, Diagnostic
+from turbopy import CSVDiagnosticOutput, ComputeTool, FieldDiagnostic
+from turbopy import construct_simulation_from_toml
 
 
 class EMWave(PhysicsModule):
@@ -9,7 +12,14 @@ class EMWave(PhysicsModule):
         super().__init__(owner, input_data)
         self.c = 2.998e8
         self.E0 = input_data["amplitude"]
-        self.E = owner.grid.generate_field()
+
+        self.E = xr.DataArray(owner.grid.generate_field(),
+                              dims="x", coords={"x": owner.grid.r})
+        self.E.x.attrs["long_name"] = "Position"
+        self.E.x.attrs["units"] = "m"
+        self.E.attrs["long_name"] = "Electric Field"
+        self.E.attrs["units"] = "V/m"
+
         self.omega = input_data["omega"]
         self.k = self.omega / self.c
     
@@ -87,6 +97,24 @@ class ParticleDiagnostic(Diagnostic):
         self.csv.append(data)
 
 
+class FieldPlottingDiagnostic(FieldDiagnostic):
+    """Extend the FieldDiagnostic to also create plots of the data"""
+    def __init__(self, owner: Simulation, input_data: dict):
+        super().__init__(owner, input_data)
+
+    def do_diagnostic(self):
+        super().do_diagnostic()
+        plt.clf()
+        self.field.plot()
+        plt.title(f"Time: {self.owner.clock.time:0.3e} s")
+        plt.pause(0.01)
+
+    def finalize(self):
+        super().finalize()
+        # Call show to keep the plot open
+        plt.show()
+
+
 class ForwardEuler(ComputeTool):
     def __init__(self, owner: Simulation, input_data: dict):
         super().__init__(owner, input_data)
@@ -104,6 +132,7 @@ class ForwardEuler(ComputeTool):
 PhysicsModule.register("EMWave", EMWave)
 PhysicsModule.register("ChargedParticle", ChargedParticle)
 Diagnostic.register("ParticleDiagnostic", ParticleDiagnostic)
+Diagnostic.register("FieldPlottingDiagnostic", FieldPlottingDiagnostic)
 ComputeTool.register("ForwardEuler", ForwardEuler)
 
 input_file = "particle_in_field.toml"
