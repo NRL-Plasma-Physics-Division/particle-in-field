@@ -38,3 +38,11 @@ def test_chargedparticle(sim_example):
     assert isinstance(charged_example, ChargedParticle)
     assert charged_example.E is None
     assert charged_example.x == particle_data["position"]
+
+
+def test_id_of_shared_attribute_should_not_change_after_update(sim_example):
+    """Tests if a shared attribute references the same object after update"""
+    wave = EMWave(sim_example, wave_data)
+    old_id = id(wave.E)
+    wave.update()
+    assert old_id == id(wave.E)
