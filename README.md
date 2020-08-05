@@ -1,6 +1,7 @@
 # TurboPy app for charged particle motion
+[![DOI](https://zenodo.org/badge/272427384.svg)](https://zenodo.org/badge/latestdoi/272427384)
 
-TODO: description goes here. Include equations to be solved, and info about custom turboPy modules and diagnostics.
+Sample turboPy app which computes the motion of an electron in an electric field.
 
 # Installing and running this app
 
