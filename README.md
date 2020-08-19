@@ -3,10 +3,13 @@
 
 Sample turboPy app which computes the motion of an electron in an electric field.
 
+# Installing turboPy
+
+- Install turboPy: `pip install turbopy`
+
 # Installing and running this app
 
-- Create a `turbopy` conda environment as described in the [turboPy readme](https://github.com/NRL-Plasma-Physics-Division/turbopy). 
-- Clone this repo (into a directory other than the one where the turboPy core module is installed).
+- Clone this repository.
 - Run the code:
 ```bash
 > python ./particle_in_field.py
