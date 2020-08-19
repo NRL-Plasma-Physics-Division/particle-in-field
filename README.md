@@ -9,7 +9,7 @@ Sample turboPy app which computes the motion of an electron in an electric field
 
 # Installing and running this app
 
-- Clone this repo (into a directory other than the one where the turboPy core module is installed).
+- Clone this repository.
 - Run the code:
 ```bash
 > python ./particle_in_field.py
