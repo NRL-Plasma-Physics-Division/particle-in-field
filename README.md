@@ -14,4 +14,12 @@ Sample turboPy app which computes the motion of an electron in an electric field
 ```bash
 > python ./particle_in_field.py
 ```
+
+![simulation run](screenshots/particle_in_field_output.gif)
+
 - Output is saved in `csv` format in the folder called `output`.
+
+# Running the app in a Jupyter notebook
+
+This sample app is also available as a [Jupyter notebook](tutorial.ipynb).
+
