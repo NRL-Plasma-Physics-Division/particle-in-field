@@ -108,6 +108,7 @@ class FieldPlottingDiagnostic(FieldDiagnostic):
         plt.clf()
         self.field.plot()
         plt.title(f"Time: {self._owner.clock.time:0.3e} s")
+        plt.ylim(-1.2, 1.2)
         plt.pause(0.01)
 
     def finalize(self):
