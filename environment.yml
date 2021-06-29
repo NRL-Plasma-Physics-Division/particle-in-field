@@ -1,0 +1,11 @@
+name: turbopy
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - numpy
+  - xarray
+  - pip
+  - pip:
+    - matplotlib
+    - turbopy
