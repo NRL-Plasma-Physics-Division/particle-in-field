@@ -1,6 +1,6 @@
 # TurboPy app for charged particle motion
 [![DOI](https://zenodo.org/badge/272427384.svg)](https://zenodo.org/badge/latestdoi/272427384)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NRL-Plasma-Physics-Division/particle-in-field/HEAD?filepath=tutorial.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NRL-Plasma-Physics-Division/particle-in-field/HEAD?filepath=hack_week.ipynb)
 
 Sample turboPy app which computes the motion of an electron in an electric field.
 
