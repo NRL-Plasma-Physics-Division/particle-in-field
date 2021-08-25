@@ -22,6 +22,8 @@ class EMWave(PhysicsModule):
 
         self.omega = input_data["omega"]
         self.k = self.omega / self.c
+
+        self._resources_to_share = {"EMField:E": self.E}
     
     def initialize(self):
         phase = - self.omega * 0 + self.k * (self._owner.grid.r - 0.5)
@@ -31,9 +33,6 @@ class EMWave(PhysicsModule):
         phase = - self.omega * self._owner.clock.time \
                 + self.k * (self._owner.grid.r - 0.5)
         self.E[:] = self.E0 * np.cos(2 * np.pi * phase)
-        
-    def exchange_resources(self):
-        self.publish_resource({"EMField:E": self.E})
 
 
 class ChargedParticle(PhysicsModule):
@@ -48,14 +47,13 @@ class ChargedParticle(PhysicsModule):
         self.charge = 1.6022e-19
         self.mass = 9.1094e-31
         self.push = owner.find_tool_by_name(input_data["pusher"]).push
-        
-    def exchange_resources(self):
-        self.publish_resource({"ChargedParticle:position": self.position})
-        self.publish_resource({"ChargedParticle:momentum": self.momentum})
-    
-    def inspect_resource(self, resource):
-        if "EMField:E" in resource:
-            self.E = resource["EMField:E"]    
+
+        self._resources_to_share = {
+            "ChargedParticle:position": self.position,
+            "ChargedParticle:momentum": self.momentum
+        }
+
+        self._needed_resources = {"EMField:E": "E"}        
 
     def update(self):
         E = np.array([0, self.interp_field(self.E), 0])
@@ -69,10 +67,10 @@ class ParticleDiagnostic(Diagnostic):
         self.component = input_data["component"]
         self.output_function = None
         
-    def inspect_resource(self, resource):
-        if "ChargedParticle:" + self.component in resource:
-            self.data = resource["ChargedParticle:" + self.component]
-    
+        self._needed_resources = {
+            "ChargedParticle:" + self.component: "data"
+        }
+
     def diagnose(self):
         self.output_function(self.data[0, :])
 
